@@ -18,7 +18,7 @@ export const getList = (successCB,errorCB) => {
 export const createNewCompany = (companyObj,successCB,errorCB) => {  
   return request
   .post(baseURL+'/company') 
-  .send(JSON.stringify(companyObj))  
+  .send(companyObj)
   .end(function(err, reply){     
     var resp=JSON.parse(reply.text)              
     if (err || !reply.ok) {

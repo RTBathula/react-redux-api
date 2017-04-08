@@ -37,7 +37,7 @@ export default function company(state = initialState, action) {
         isNewCompanySaving : action.isNewCompanySaving
       } 
 
-    case types.COMPANY_GETLIST_SUCCESS:      
+    case types.COMPANY_NEW_SUCCESS:      
       return {       
         ...state,
         isNewCompanySaving : false,       

@@ -24,7 +24,7 @@ export const toggleIsNewCompanySaving = (bool) => {
 }
 
 export const createNewCompanyAsync = (companyObj) => (dispatch, getState) => {   
-	companyApi.createNewCompany(newCompany =>{		
+	companyApi.createNewCompany(companyObj,newCompany =>{		
 	  	dispatch({ 
 			type        : types.COMPANY_NEW_SUCCESS,
 			newCompany  : newCompany
