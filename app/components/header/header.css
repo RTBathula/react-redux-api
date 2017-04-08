@@ -1,0 +1,21 @@
+.headstrip{
+	border-bottom: 1px solid #E0E0E0;	
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: white;
+	z-index: 999999;			
+}
+
+.headerContainer{
+	height: 50px;
+	width: 100%;	
+}
+.title{
+	height: 100%;
+	width: 100%;
+}
+.title span{
+	font-size: 22px;
+	font-weight: bold;
+}

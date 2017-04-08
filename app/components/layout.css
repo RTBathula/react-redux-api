@@ -1,0 +1,18 @@
+.screenfull{
+	width:100%;	
+}
+
+.screen980{
+	width:980px;	
+}
+
+.mainScreenHeight{	
+	margin-top: 51px;		
+}
+
+.parentLightGrayFG{
+	color:#F7F7F7;
+}
+.parentLightGrayBG{
+	background-color:#F7F7F7;
+}

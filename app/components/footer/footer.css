@@ -1,0 +1,15 @@
+.footstrip{
+	border-top: 1px solid #E0E0E0;	
+	background-color: white;				
+}
+.footContainer{
+	height: 30px;
+	width: 100%;		
+}
+.title{
+	height: 100%;
+	width: 100%;
+}
+.title span{
+	font-size: 14px;	
+}
