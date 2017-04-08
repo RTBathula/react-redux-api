@@ -14,3 +14,17 @@ export const getList = (successCB,errorCB) => {
     }
   })
 }
+
+export const createNewCompany = (companyObj,successCB,errorCB) => {  
+  return request
+  .post(baseURL+'/company') 
+  .send(JSON.stringify(companyObj))  
+  .end(function(err, reply){     
+    var resp=JSON.parse(reply.text)              
+    if (err || !reply.ok) {
+      errorCB(resp.message)
+    } else {    
+      successCB(resp.data)
+    }
+  })
+}

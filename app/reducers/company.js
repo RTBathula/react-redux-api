@@ -8,7 +8,10 @@ const initialState = {
   fetchError       : null,
   skip             : 0,
   limit            : 50,
-  list             : []  
+  list             : [],
+
+  isNewCompanySaving  : false,
+  newCompanySavingErr : null,    
 }
 
 export default function company(state = initialState, action) {
@@ -27,12 +30,27 @@ export default function company(state = initialState, action) {
         isTableLoadError : action.error       
       } 
 
-    case types.COMPANY_GETLIST_ISFETCHING:
+    case types.COMPANY_NEW_ISSAVING:
 
       return {
         ...state,
-        isFetchingList : action.isFetchingList
+        isNewCompanySaving : action.isNewCompanySaving
+      } 
+
+    case types.COMPANY_GETLIST_SUCCESS:      
+      return {       
+        ...state,
+        isNewCompanySaving : false,       
+        list               : [action.newCompany]             
+      }
+    
+    case types.COMPANY_NEW_FAILURE:
+      return {       
+        ...state,      
+        isNewCompanySaving   : false, 
+        newCompanySavingErr  : action.error       
       }   
+
  
     default:
       return state
