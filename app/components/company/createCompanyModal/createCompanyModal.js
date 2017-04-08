@@ -74,6 +74,15 @@ class App extends Component {
     })     
   } 
 
+  removeMoreMembers=(columnName,index)=>{  
+    if(index!=0){     
+      this.state[columnName].splice(index,1)   
+      this.setState({
+        [columnName] : this.state[columnName]
+      })
+    }        
+  }   
+
   render() {
     return (   
     <div> 
@@ -208,7 +217,17 @@ class App extends Component {
            {/*director suits*/}
            {
              this.state.directors.map((obj, index)=> {
-                return <div key={ index }>
+                return <div key={ index } className={style.membersBox} >
+                  {index!=0 &&
+                    <div style={{"width":"100%"}} className={'flex-row-end-center '}>
+                      <div>
+                        <span onClick={() => {this.removeMoreMembers("directors",index)}} style={{"fontSize":"12px","textDecoration":"underline","color":"red","cursor":"pointer"}}>
+                        Remove
+                        </span>                     
+                      </div>
+                    </div>
+                  }                  
+
                   {/*inputSuite*/}
                   <div className={'flex-row-start-start '+style.inputSuite}>
                     <div className={'vertical-center '+style.inputLabel}>
@@ -254,7 +273,7 @@ class App extends Component {
                 </div>
                 <div style={{"marginLeft":"3px"}}>
                   <div className={style.inputWrap}>
-                    <button onClick={() => {this.addMoreMembers("directors")}} className={"default-inputfield " +style.createBtn}>
+                    <button onClick={() => {this.addMoreMembers("directors")}} className={"default-inputfield "}>
                       <i className="icon ion-plus"></i>&nbsp;
                       Add more
                     </button>
@@ -271,7 +290,17 @@ class App extends Component {
            {/*benefical suits*/}
            {
              this.state.beneficials.map((obj, index)=> {
-                return <div key={ index }>
+                return <div key={ index } className={style.membersBox} >
+                  {index!=0 &&
+                    <div style={{"width":"100%"}} className={'flex-row-end-center '}>
+                      <div>
+                        <span onClick={() => {this.removeMoreMembers("beneficials",index)}} style={{"fontSize":"12px","textDecoration":"underline","color":"red","cursor":"pointer"}}>
+                        Remove
+                        </span>                     
+                      </div>
+                    </div>
+                  } 
+
                   {/*inputSuite*/}
                   <div className={'flex-row-start-start '+style.inputSuite}>
                     <div className={'vertical-center '+style.inputLabel}>
@@ -317,7 +346,7 @@ class App extends Component {
                 </div>
                 <div style={{"marginLeft":"3px"}}>
                   <div className={style.inputWrap}>
-                    <button onClick={() => {this.addMoreMembers("beneficials")}}} className={"default-inputfield " +style.createBtn}>
+                    <button onClick={() => {this.addMoreMembers("beneficials")}} className={"default-inputfield "}>
                       <i className="icon ion-plus"></i>&nbsp;
                       Add more
                     </button>
@@ -330,7 +359,11 @@ class App extends Component {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={this.props.hideModal}>Cancel</Button>        
+        <Button onClick={this.props.hideModal}>Cancel</Button> 
+        <button className={"default-inputfield " +style.createBtn}>
+          <i className="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+          Create
+        </button>        
       </Modal.Footer>
     </Modal>
     </div>  
