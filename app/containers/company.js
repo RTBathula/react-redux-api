@@ -3,11 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {Link} from 'react-router'
 
-import * as UserActions from 'actions/user'
+import * as companyActions from 'actions/company'
 
 //Components
 import Header from 'components/header/header'
-import Company from 'components/company/company'
+import Company from 'components/company/list/list'
 import Footer from 'components/footer/footer'
 
 
@@ -17,7 +17,7 @@ class App extends Component {
     return ( 
     	<div>					
   			<Header/>
-  			<Company user={this.props.user} actions={this.props.actions}/>
+  			<Company company={this.props.company} actions={this.props.actions}/>
   			<Footer/>				
   		</div>   	    
     );
@@ -25,11 +25,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  user : state.user
+  company : state.company
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(UserActions, dispatch)
+  actions: bindActionCreators(companyActions, dispatch)
 })
 
 export default connect(

@@ -1,3 +1,4 @@
+
 /* Flex css helpers */
 .flex-row-start-start{
    /* Flex row rules */
@@ -191,7 +192,7 @@
     font-family: segoeui;
     src: url(/assets/fonts/segoeui.ttf);
 }
-body{
+body{   
     font-size: 12px;
     font-family: 'Open Sans', sans-serif;
 }
