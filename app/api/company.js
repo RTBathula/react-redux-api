@@ -3,6 +3,8 @@ import request from 'superagent'
 import * as util from 'helpers/util'
 
 export const getList = (skip,limit,successCB,errorCB) => {	 
+  console.log(process.env.PORT)
+  console.log(baseURL)
   return request
   .get(baseURL+'/company?skip='+skip+'&limit='+limit)     
   .end(function(err, reply){     
