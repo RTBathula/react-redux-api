@@ -1,4 +1,4 @@
-var baseURL = 'http://todovabackend.herokuapp.com'
+var baseURL = 'http://nodecompanyapi.herokuapp.com'
 
 if (process.env.NODE_ENV !== 'production') {	
 	baseURL = 'http://localhost:1447'
