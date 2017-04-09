@@ -4,7 +4,8 @@ var path = require('path');
 
 app.use(express.static(__dirname));
 
-if (!process.env.APIURL) {
+process.env.NODE_ENV = "production"
+if (process.env.NODE_ENV !== 'production') {
   var webpack = require('webpack')
   var webpackDevMiddleware = require('webpack-dev-middleware')
   var webpackHotMiddleware = require('webpack-hot-middleware')
