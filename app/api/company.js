@@ -28,3 +28,16 @@ export const createNewCompany = (companyObj,successCB,errorCB) => {
     }
   })
 }
+
+export const fetchCompanyDetails = (companyId,successCB,errorCB) => {  
+  return request
+  .get(baseURL+'/company/'+companyId)  
+  .end(function(err, reply){       
+    var resp=JSON.parse(reply.text)              
+    if (err || !reply.ok) {
+      errorCB(resp.message)
+    } else {    
+      successCB(resp.data)
+    }
+  })
+}

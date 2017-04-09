@@ -34,3 +34,8 @@
 .value span{
 	font-size: 18px;
 }
+
+.detailsBootWrap{
+	width: 100%;
+	height: 400px;
+}

@@ -167,7 +167,8 @@ class App extends Component {
                     </div>
                     <div style={{"marginTop":"2px"}}>
                       <span style={{"fontSize":"16px"}}>                    
-                        Unable to load the company table. Please refresh the page again
+                        Unable to load the company table. Please refresh the page again.
+                        ErrorMessage from server: {this.props.company.isTableLoadError}
                       </span>
                     </div>
                   </div>

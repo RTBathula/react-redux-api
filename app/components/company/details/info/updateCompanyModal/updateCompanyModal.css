@@ -1,0 +1,36 @@
+.inputSuite{
+	height: auto;
+	width: 100%;
+	margin-top: 12px;	
+}
+
+.inputLabel{
+	height: 25px;
+	width: 180px;
+}
+.inputWrap{
+	height: 22px;
+}
+.inputNormal{
+	height: 100%;
+	width:240px;
+	border:1px solid black;
+	font-size: 14px;
+	padding-left: 2px;
+}
+.membersBox{
+	background-color: #eeeeee;
+	padding:10px;
+	margin-top: 10px
+}
+
+.createBtn{
+	width: 100px;
+	height: 32px;
+	background-color: green;
+	color: white;
+	border-radius: 5px;
+	margin-left: 8px;
+	font-size: 14px;
+	margin-top: 2px;
+}

@@ -40,7 +40,7 @@ class App extends Component {
                 <span>Company Id:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>{this.props.company.companyDetails._id}</span>
               </div>
             </div>
 
@@ -49,7 +49,7 @@ class App extends Component {
                 <span>Company Name:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>{this.props.company.companyDetails.name}</span>
               </div>
             </div>
 
@@ -58,7 +58,7 @@ class App extends Component {
                 <span>Company Address:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>{this.props.company.companyDetails.address}</span>
               </div>
             </div>
 
@@ -67,7 +67,7 @@ class App extends Component {
                 <span>Company City:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>{this.props.company.companyDetails.city}</span>
               </div>
             </div>
 
@@ -76,7 +76,7 @@ class App extends Component {
                 <span>Company Country:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>{this.props.company.companyDetails.country}</span>
               </div>
             </div>
 
@@ -85,7 +85,7 @@ class App extends Component {
                 <span>Company Email:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>{this.props.company.companyDetails.email}</span>
               </div>
             </div>
 
@@ -94,7 +94,7 @@ class App extends Component {
                 <span>Company Phone:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>{this.props.company.companyDetails.phone}</span>
               </div>
             </div>
 
@@ -103,7 +103,9 @@ class App extends Component {
                 <span>Created On:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>
+                   <LocalTime date={this.props.company.companyDetails.createdAt} />
+                </span>
               </div>
             </div>
 
@@ -112,7 +114,9 @@ class App extends Component {
                 <span>Last Updated On:</span>
               </div>
               <div className={style.value}>
-                <span>World</span>
+                <span>
+                  <LocalTime date={this.props.company.companyDetails.updatedAt} />
+                </span>
               </div>
             </div>
 

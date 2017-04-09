@@ -11,7 +11,11 @@ const initialState = {
   list             : [],
 
   isNewCompanySaving  : false,
-  newCompanySavingErr : null,    
+  newCompanySavingErr : null, 
+
+  isCompanyDetailsFetching  : true,
+  companyDetailsFetchingErr : null, 
+  companyDetails            : {}  
 }
 
 export default function company(state = initialState, action) {
@@ -73,7 +77,21 @@ export default function company(state = initialState, action) {
         ...state,      
         isNewCompanySaving   : false, 
         newCompanySavingErr  : action.error       
-      }   
+      } 
+
+    case types.COMPANY_FETCHDETAILS_SUCCESS:      
+      return {       
+        ...state,
+        isCompanyDetailsFetching : false,       
+        companyDetails           : action.companyDetails        
+      }
+
+     case types.COMPANY_FETCHDETAILS_FAILURE:
+      return {       
+        ...state,      
+        isCompanyDetailsFetching   : false, 
+        companyDetailsFetchingErr  : action.error       
+      }      
 
  
     default:

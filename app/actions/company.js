@@ -58,3 +58,17 @@ export const createNewCompanyAsync = (companyObj) => (dispatch, getState) => {
 		})
 	}) 
 }
+
+export const fetchCompanyDetailsAsync = (companyId) => (dispatch, getState) => {   
+	companyApi.fetchCompanyDetails(companyId,companyDetails =>{		
+	  	dispatch({ 
+			type            : types.COMPANY_FETCHDETAILS_SUCCESS,
+			companyDetails  : companyDetails
+		})
+	},error =>{
+	  	dispatch({ 
+			type  : types.COMPANY_FETCHDETAILS_FAILURE,
+			error : error
+		})
+	}) 
+}

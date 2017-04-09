@@ -13,11 +13,11 @@ import Footer from 'components/footer/footer'
 
 class App extends Component { 
 
-  render() {
+  render() {   
     return ( 
     	<div>					
   			<Header/>
-  			<CompanyDetails company={this.props.company} actions={this.props.actions}/>
+  			<CompanyDetails params={this.props.params} company={this.props.company} actions={this.props.actions}/>
   			<Footer/>				
   		</div>   	    
     );
