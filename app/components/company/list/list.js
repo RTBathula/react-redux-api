@@ -13,7 +13,7 @@ class App extends Component {
    constructor(props) {
     super(props);
     this.state = {     
-      openCreateCompanyModel : false    
+      openCreateCompanyModel : false        
     }
   }
 
@@ -119,7 +119,7 @@ class App extends Component {
                       }).map((obj, index)=> {
                         return  <tr  key={ index }>
                           <td>
-                            <Link className="companyIdLink" to={'/company/'+obj._id } target="_blank">
+                            <Link className="companyIdLink" to={'/'+obj._id } target="_blank">
                               <span>{obj._id}</span>
                             </Link>                          
                           </td>
@@ -128,7 +128,7 @@ class App extends Component {
                             <LocalTime date={obj.createdAt} />
                           </td>
                           <td>
-                            <Link className="companyIdLink" to={'/company/'+obj._id } target="_blank">
+                            <Link className="companyIdLink" to={'/'+obj._id } target="_blank">
                               <span>View details</span>
                             </Link>
                           </td>                          
@@ -179,7 +179,7 @@ class App extends Component {
         </div>
 
         {/*Create company model*/}
-        <CreateCompanyModal showModal={this.state.openCreateCompanyModel} hideModal={() => this.setState({openCreateCompanyModel: false})}/>
+        <CreateCompanyModal  showModal={this.state.openCreateCompanyModel} hideModal={() => this.setState({openCreateCompanyModel: false})}/>
       </div>              	  	
     );
   }

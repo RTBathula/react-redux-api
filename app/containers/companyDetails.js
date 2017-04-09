@@ -7,7 +7,7 @@ import * as companyActions from 'actions/company'
 
 //Components
 import Header from 'components/header/header'
-import Company from 'components/company/list/list'
+import CompanyDetails from 'components/company/details/details'
 import Footer from 'components/footer/footer'
 
 
@@ -17,7 +17,7 @@ class App extends Component {
     return ( 
     	<div>					
   			<Header/>
-  			<Company company={this.props.company} actions={this.props.actions}/>
+  			<CompanyDetails company={this.props.company} actions={this.props.actions}/>
   			<Footer/>				
   		</div>   	    
     );

@@ -9,6 +9,7 @@ import * as companyActions from 'actions/company'
 
 //Custom style
 import style from './createCompanyModal.css';
+     
 
 class App extends Component { 
 
@@ -58,8 +59,8 @@ class App extends Component {
           value : "",
           error :""
         }
-      }]           
-    }       
+      }]  
+    }
   }
 
   componentWillReceiveProps(nextProps) {    
