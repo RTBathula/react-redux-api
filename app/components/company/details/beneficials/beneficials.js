@@ -26,7 +26,7 @@ class App extends Component {
               <span style={{"fontSize":"17px","fontWeight":"500"}}>Beneficials owners</span>
             </div>
             <div style={{"height":"20px","marginLeft":"2px"}} className={"vertical-center"}>
-              <span style={{"color":"blue","textDecoration":"underline","cursor":"pointer"}}>(Edit)</span>
+              <span style={{"color":"blue","textDecoration":"underline","cursor":"pointer"}}>(+Add more beneficials)</span>
             </div>           
           </div>
           <div style={{"borderTop":"1px solid gray","margin":"6px 0px 6px 0px","width":"100%"}}>

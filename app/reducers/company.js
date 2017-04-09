@@ -15,7 +15,10 @@ const initialState = {
 
   isCompanyDetailsFetching  : true,
   companyDetailsFetchingErr : null, 
-  companyDetails            : {}  
+  companyDetails            : {},
+
+  isCompanyInfoUpdating  : false,
+  companyInfoUpdatingErr : null  
 }
 
 export default function company(state = initialState, action) {
@@ -86,12 +89,41 @@ export default function company(state = initialState, action) {
         companyDetails           : action.companyDetails        
       }
 
-     case types.COMPANY_FETCHDETAILS_FAILURE:
+    case types.COMPANY_FETCHDETAILS_FAILURE:
       return {       
         ...state,      
         isCompanyDetailsFetching   : false, 
         companyDetailsFetchingErr  : action.error       
-      }      
+      }  
+
+    case types.COMPANY_IS_UPDATING:
+
+      return {
+        ...state,
+        isCompanyInfoUpdating  : action.isCompanyInfoUpdating,
+        companyInfoUpdatingErr : null
+      } 
+
+    case types.COMPANY_UPDATEDETAILS_SUCCESS:      
+      return {       
+        ...state,
+        isCompanyInfoUpdating    : false,       
+        companyDetails           : {
+          ...state.companyDetails,
+          address  : action.updatedDetails.address,
+          city     : action.updatedDetails.city,
+          country  : action.updatedDetails.country,
+          email    : action.updatedDetails.email,
+          phone    : action.updatedDetails.phone
+        }       
+      }
+
+    case types.COMPANY_UPDATEDETAILS_FAILURE:
+      return {       
+        ...state,      
+        isCompanyInfoUpdating      : false, 
+        companyInfoUpdatingErr     : action.error       
+      }        
 
  
     default:

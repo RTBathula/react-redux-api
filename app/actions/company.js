@@ -72,3 +72,24 @@ export const fetchCompanyDetailsAsync = (companyId) => (dispatch, getState) => {
 		})
 	}) 
 }
+
+export const toggleIsCompanyInfoUpdating = (bool) => {
+  return ({
+    type                  : types.COMPANY_IS_UPDATING,
+    isCompanyInfoUpdating : bool
+  })
+}
+
+export const updateCompanyDetailsAsync = (companyId,updateObj) => (dispatch, getState) => {   
+	companyApi.updateCompanyDetails(companyId,updateObj,updatedDetails =>{		
+	  	dispatch({ 
+			type            : types.COMPANY_UPDATEDETAILS_SUCCESS,
+			updatedDetails  : updatedDetails
+		})
+	},error =>{
+	  	dispatch({ 
+			type  : types.COMPANY_UPDATEDETAILS_FAILURE,
+			error : error
+		})
+	}) 
+}

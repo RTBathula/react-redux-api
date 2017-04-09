@@ -7,12 +7,14 @@ import style from '../details.css'
 import infoStyle from './info.css'
 
 import LocalTime from 'components/helpers/localTime'
+import UpdateCompanyModal from './updateCompanyModal/updateCompanyModal'
 
 class App extends Component { 
 
    constructor(props) {
     super(props);
-    this.state = {                
+    this.state = { 
+       openUpdateCompanyModal : false                  
     }
   }
 
@@ -21,14 +23,16 @@ class App extends Component {
 
   render() {
     return (         
-        
+      <div>
         <div className={style.detailsBx}>
           <div className={"flex-row-start-start"}>
             <div style={{"height":"20px"}} className={"vertical-center"}>
               <span style={{"fontSize":"17px","fontWeight":"500"}}>Details</span>
             </div>
             <div style={{"height":"20px","marginLeft":"2px"}} className={"vertical-center"}>
-              <span style={{"color":"blue","textDecoration":"underline","cursor":"pointer"}}>(Edit)</span>
+              <span onClick={() => this.setState({openUpdateCompanyModal: true})} style={{"color":"blue","textDecoration":"underline","cursor":"pointer"}}>
+              (Edit)
+              </span>
             </div>
           </div>
           <div style={{"borderTop":"1px solid gray","margin":"6px 0px 6px 0px","width":"100%"}}>
@@ -122,7 +126,10 @@ class App extends Component {
 
           </div>
 
-        </div>              	  	
+        </div> 
+
+        <UpdateCompanyModal showModal={this.state.openUpdateCompanyModal} hideModal={() => this.setState({openUpdateCompanyModal: false})}/>
+      </div>              	  	
     );
   }
 }

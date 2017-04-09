@@ -8,18 +8,14 @@ import * as helpers from 'helpers/util'
 import * as companyActions from 'actions/company'
 
 //Custom style
-import style from './createCompanyModal.css';
+import style from './updateCompanyModal.css';
      
 
 class App extends Component { 
 
   constructor(props) {
     super(props);
-    this.state = {    
-      name        : {
-        value : "",
-        error :""
-      },
+    this.state = {        
       address     : {
         value : "",
         error :""
@@ -39,61 +35,33 @@ class App extends Component {
       phone       : {
         value : "",
         error :""
-      },
-      directors   : [{
-        name  : {
-          value : "",
-          error :""
-        },
-          email : {
-          value : "",
-          error :""
-        }
-      }],
-      beneficials :[{
-          name  : {
-          value : "",
-          error :""
-        },
-          email : {
-          value : "",
-          error :""
-        }
-      }]  
+      }
     }
   }
 
+  onEntered=()=>{  
+    this.state.address.value = this.props.company.companyDetails.address
+    this.state.city.value    = this.props.company.companyDetails.city
+    this.state.country.value = this.props.company.companyDetails.country
+    this.state.email.value   = this.props.company.companyDetails.email
+    this.state.phone.value   = this.props.company.companyDetails.phone
+
+    this.setState({
+      address : this.state.address,
+      city    : this.state.city,
+      country : this.state.country,
+      email   : this.state.email,
+      phone   : this.state.phone,
+    })
+  } 
+
   componentWillReceiveProps(nextProps) {    
-    if(this.props.company.isNewCompanySaving && !nextProps.company.isNewCompanySaving && !nextProps.company.newCompanySavingErr){
+    console.log("nextProps")
+    console.log(nextProps)
+    if(this.props.company.isCompanyInfoUpdating && !nextProps.company.isCompanyInfoUpdating && !nextProps.company.companyInfoUpdatingErr){
       this.props.hideModal()
     }   
   }
-
-  addMoreMembers=(columnName)=>{  
-    this.state[columnName].push({
-        name  : {
-          value : "",
-          error :""
-        },
-          email : {
-          value : "",
-          error :""
-        }
-    })
-
-    this.setState({
-      [columnName] : this.state[columnName]
-    })     
-  } 
-
-  removeMembers=(columnName,index)=>{  
-    if(index!=0){     
-      this.state[columnName].splice(index,1)   
-      this.setState({
-        [columnName] : this.state[columnName]
-      })
-    }        
-  }   
 
   bindInputData=(event,columnName)=>{    
     this.state[columnName].value = event.target.value 
@@ -101,54 +69,27 @@ class App extends Component {
       [columnName] : this.state[columnName]
     })       
   }
-
-  bindMemberInputData=(event,columnName,index,subColumnName)=>{    
-    this.state[columnName][index][subColumnName].value = event.target.value 
-    this.setState({
-      [columnName] : this.state[columnName]
-    })       
-  } 
  
-  create =()=>{    
+  update =()=>{    
     let isValid = this._validate()
     if(isValid){
       let finalObj = {}
-      finalObj.name    = this.state.name.value
+    
       finalObj.address = this.state.address.value
       finalObj.city    = this.state.city.value
       finalObj.country = this.state.country.value
       finalObj.email   = this.state.email.value
-      finalObj.phone   = this.state.phone.value
+      finalObj.phone   = this.state.phone.value   
 
-      finalObj.directors = []
-      for(var i=0;i<this.state.directors.length;++i){
-        let name  = this.state.directors[i].name.value 
-        let email = this.state.directors[i].email.value   
-        finalObj.directors.push({
-          name  : name,
-          email : email
-        }) 
-      }
-
-      finalObj.beneficials = []
-      for(var i=0;i<this.state.beneficials.length;++i){
-        let name  = this.state.beneficials[i].name.value 
-        let email = this.state.beneficials[i].email.value   
-        finalObj.beneficials.push({
-          name  : name,
-          email : email
-        }) 
-      } 
-
-      this.props.actions.toggleIsNewCompanySaving(true)
-      this.props.actions.createNewCompanyAsync(finalObj)     
+      this.props.actions.toggleIsCompanyInfoUpdating(true)
+      this.props.actions.updateCompanyDetailsAsync(this.props.company.companyDetails._id,finalObj)     
     }    
   } 
 
   _validate = () => {  
     //Nullify previous errors
     for (var prop in this.state) {
-      if (this.state.hasOwnProperty(prop) && prop!="directors" && prop!="beneficials") {
+      if (this.state.hasOwnProperty(prop)) {
         this.state[prop].error = ""
         this.setState({
           [prop]: this.state[prop]
@@ -156,42 +97,9 @@ class App extends Component {
       }
     }
 
-    for(var i=0;i<this.state.directors.length;++i){
-      this.state.directors[i].name.error = ""
-      this.state.directors[i].email.error = ""     
-    }
+    let isValid = true  
 
-    this.setState({
-      directors: this.state.directors
-    })
-
-    for(var i=0;i<this.state.beneficials.length;++i){
-      this.state.beneficials[i].name.error = ""
-      this.state.beneficials[i].email.error = ""      
-    }
-    this.setState({
-      beneficials: this.state.beneficials
-    })
-
-
-    let isValid = true
-
-    let txtMsg = helpers.validateTextField(this.state.name.value)
-    if(txtMsg.error){
-      this.state.name.error="Company Name"+txtMsg.error   
-      this.setState({
-        name: this.state.name
-      })
-      isValid = false      
-    }
-    if(!txtMsg.error && txtMsg.txt){
-      this.state.name.value = txtMsg.txt   
-      this.setState({
-        name: this.state.name
-      })
-    }  
-
-    txtMsg = helpers.validateTextField(this.state.address.value)
+    let txtMsg = helpers.validateTextField(this.state.address.value)
     if(txtMsg.error){
       this.state.address.error="Company Address"+txtMsg.error   
       this.setState({
@@ -258,144 +166,24 @@ class App extends Component {
         phone: this.state.phone
       })
       isValid = false
-    }
-
-    var uniqueDirectors = []
-    for(var i=0;i<this.state.directors.length;++i){
-      let name  =  this.state.directors[i].name.value
-      let email = this.state.directors[i].email.value
-
-      if(i==0){
-        let foundIndex=uniqueDirectors.indexOf(email)
-        if(foundIndex>-1){
-          this.state.directors[i].email.error="Duplicate director email(it should be unique)"       
-          isValid = false  
-        }
-        if(foundIndex<0){
-          uniqueDirectors.push(email)
-        }
-        if(!helpers.validarEmail(email)){
-          this.state.directors[i].email.error="Invalid director email"      
-          isValid = false
-        } 
-
-        txtMsg = helpers.validateTextField(name)
-        if(txtMsg.error){
-          this.state.directors[i].name.error="Director Name"+txtMsg.error          
-          isValid = false      
-        }
-        if(!txtMsg.error && txtMsg.txt){
-          this.state.directors[i].name.value = txtMsg.txt          
-        }
-      }
-
-      if(i!=0 && email && email!=""){
-        let foundIndex=uniqueDirectors.indexOf(email)
-        if(foundIndex>-1){
-          this.state.directors[i].email.error="Duplicate director email(it should be unique)"       
-          isValid = false  
-        }
-        if(foundIndex<0){
-          uniqueDirectors.push(email)
-        }
-        if(!helpers.validarEmail(email)){
-          this.state.directors[i].email.error="Invalid director email"      
-          isValid = false
-        } 
-      }
-      if(i!=0 && name && name!=""){
-        txtMsg = helpers.validateTextField(name)
-        if(txtMsg.error){
-          this.state.directors[i].name.error="Director Name"+txtMsg.error          
-          isValid = false      
-        }
-        if(!txtMsg.error && txtMsg.txt){
-          this.state.directors[i].name.value = txtMsg.txt          
-        }
-      }
-      
-    } 
-
-    this.setState({
-      directors: this.state.directors
-    }) 
-
-    var uniqueBeneficials = []
-    for(var i=0;i<this.state.beneficials.length;++i){
-      let name  =  this.state.beneficials[i].name.value
-      let email = this.state.beneficials[i].email.value
-
-      if(i==0){
-        let foundIndex=uniqueBeneficials.indexOf(email)
-        if(foundIndex>-1){
-          this.state.beneficials[i].email.error="Duplicate beneficial email(it should be unique)"       
-          isValid = false  
-        }
-        if(foundIndex<0){
-          uniqueBeneficials.push(email)
-        }
-        if(!helpers.validarEmail(email)){
-          this.state.beneficials[i].email.error="Invalid beneficial email"      
-          isValid = false
-        }
-        txtMsg = helpers.validateTextField(name)
-        if(txtMsg.error){
-          this.state.beneficials[i].name.error="Beneficial Name"+txtMsg.error          
-          isValid = false      
-        }
-        if(!txtMsg.error && txtMsg.txt){
-          this.state.beneficials[i].name.value = txtMsg.txt          
-        }      
-      }
-      
-      if(i!=0 && email && email!=""){
-        let foundIndex=uniqueBeneficials.indexOf(email)
-        if(foundIndex>-1){
-          this.state.beneficials[i].email.error="Duplicate beneficial email(it should be unique)"       
-          isValid = false  
-        }
-        if(foundIndex<0){
-          uniqueBeneficials.push(email)
-        }
-        if(!helpers.validarEmail(email)){
-          this.state.beneficials[i].email.error="Invalid beneficial email"      
-          isValid = false
-        }
-      }
-
-      if(i!=0 && name && name!=""){
-        txtMsg = helpers.validateTextField(name)
-        if(txtMsg.error){
-          this.state.beneficials[i].name.error="Beneficial Name"+txtMsg.error          
-          isValid = false      
-        }
-        if(!txtMsg.error && txtMsg.txt){
-          this.state.beneficials[i].name.value = txtMsg.txt          
-        }
-      }
-       
-    } 
-
-    this.setState({
-      beneficials: this.state.beneficials
-    })  
+    }     
    
     return isValid
   } 
 
-  render() {
+  render() {   
     return (   
     <div> 
      <Modal onEntered={this.onEntered} backdrop={"static"} keyboard={false} show={this.props.showModal} onHide={this.props.hideModal}>
       <Modal.Header closeButton>
         <Modal.Title>
-          Create new company
+          Update company info
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div style={{"width":"100%","height":"auto"}}>
           {/*Error bar*/} 
-          {this.props.company.newCompanySavingErr &&
+          {this.props.company.companyInfoUpdatingErr &&
             <div className={'flex-row-start-start'} style={{"width":"100%","height":"25px","backgroundColor":"#ffc6c6"}}> 
               <div style={{"height":"100%","marginLeft":"9px","marginTop":"1.4px"}} className={'vertical-center'}>
                 <span>
@@ -403,30 +191,14 @@ class App extends Component {
                 </span>
               </div>
               <div style={{"height":"100%","marginLeft":"3px"}} className={'vertical-center'}>
-                <span style={{"fontSize":"14px","color":"red"}}>{this.props.company.newCompanySavingErr}</span>
+                <span style={{"fontSize":"14px","color":"red"}}>{this.props.company.companyInfoUpdatingErr}</span>
               </div>
             </div>
           }
           
 
           {/*Form*/}
-          <div style={{"width":"100%","marginTop":"2px"}}>
-            {/*inputSuite*/}
-            <div className={'flex-row-start-start '+style.inputSuite}>
-              <div className={'vertical-center '+style.inputLabel}>
-               <div>
-                <span style={{"fontSize":"14px"}}>Company Name</span>
-               </div>
-              </div>
-              <div style={{"marginLeft":"3px"}}>
-                <div className={style.inputWrap}>
-                  <input type="text" value={this.state.name.value} onChange={(event) => this.bindInputData(event,"name")}  placeholder="Enter the company name" className={'default-inputfield '+style.inputNormal} />
-                </div>
-                <div>
-                  <span style={{"color":"red","marginLeft":"1.5px"}}>{this.state.name.error}</span>
-                </div>
-              </div>
-            </div>
+          <div style={{"width":"100%","marginTop":"2px"}}>                      
 
             {/*inputSuite*/}
             <div className={'flex-row-start-start '+style.inputSuite}>
@@ -483,7 +255,7 @@ class App extends Component {
             <div className={'flex-row-start-start '+style.inputSuite}>
               <div className={'vertical-center '+style.inputLabel}>
                <div>
-                <span style={{"fontSize":"14px"}}>Company Email(optional)</span>
+                <span style={{"fontSize":"14px"}}>Company Email</span>
                </div>
               </div>
               <div style={{"marginLeft":"3px"}}>
@@ -500,7 +272,7 @@ class App extends Component {
             <div className={'flex-row-start-start '+style.inputSuite}>
               <div className={'vertical-center '+style.inputLabel}>
                <div>
-                <span style={{"fontSize":"14px"}}>Company Phone(optional)</span>
+                <span style={{"fontSize":"14px"}}>Company Phone</span>
                </div>
               </div>
               <div style={{"marginLeft":"3px"}}>
@@ -513,167 +285,22 @@ class App extends Component {
               </div>
             </div>
 
-            <div style={{"width":"100%","borderTop":"1px solid gray","margin":"10px 0px 10px 0px"}}>
-            </div>
-            <p style={{"fontSize":"14px","fontWeight":"600"}}>Company Directors(atleast 1)</p>
-
-           {/*director suits*/}
-           {
-             this.state.directors.map((obj, index)=> {
-                return <div key={ index } className={style.membersBox} >
-                  {index!=0 &&
-                    <div style={{"width":"100%"}} className={'flex-row-end-center '}>
-                      <div>
-                        <span onClick={() => {this.removeMembers("directors",index)}} style={{"fontSize":"12px","textDecoration":"underline","color":"red","cursor":"pointer"}}>
-                        Remove
-                        </span>                     
-                      </div>
-                    </div>
-                  }                  
-
-                  {/*inputSuite*/}
-                  <div className={'flex-row-start-start '+style.inputSuite}>
-                    <div className={'vertical-center '+style.inputLabel}>
-                     <div>
-                      <span style={{"fontSize":"14px"}}>Director Name</span>                     
-                     </div>
-                    </div>
-                    <div style={{"marginLeft":"3px"}}>
-                      <div className={style.inputWrap}>
-                        <input type="text" value={this.state["directors"][index].name.value} onChange={(event) => this.bindMemberInputData(event,"directors",index,"name")}  placeholder="Enter the director name" className={'default-inputfield '+style.inputNormal} />
-                      </div>
-                      <div>
-                        <span style={{"color":"red","marginLeft":"1.5px"}}>{this.state["directors"][index].name.error}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/*inputSuite*/}
-                  <div className={'flex-row-start-start '+style.inputSuite}>
-                    <div className={'vertical-center '+style.inputLabel}>
-                     <div>
-                      <span style={{"fontSize":"14px"}}>Director Email</span>
-                     </div>
-                    </div>
-                    <div style={{"marginLeft":"3px"}}>
-                      <div className={style.inputWrap}>
-                        <input type="text" value={this.state["directors"][index].email.value} onChange={(event) => this.bindMemberInputData(event,"directors",index,"email")}  placeholder="Enter the director email" className={'default-inputfield '+style.inputNormal} />
-                      </div>
-                      <div>
-                        <span style={{"color":"red","marginLeft":"1.5px"}}>{this.state["directors"][index].email.error}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-             })     
-
-           }     
-
-            <div>
-              {/*add more directors button*/}
-              <div className={'flex-row-start-start '+style.inputSuite}>
-                <div className={'vertical-center '+style.inputLabel}>                 
-                </div>
-                <div style={{"marginLeft":"3px"}}>
-                  <div className={style.inputWrap}>
-                    <button onClick={() => {this.addMoreMembers("directors")}} className={"default-inputfield "}>
-                      <i className="icon ion-plus"></i>&nbsp;
-                      Add more directors
-                    </button>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-
-
-            <div style={{"width":"100%","borderTop":"1px solid gray","margin":"10px 0px 10px 0px"}}>
-            </div>
-            <p style={{"fontSize":"14px","fontWeight":"600"}}>Company Beneficals(atleast 1)</p>
-
-           {/*benefical suits*/}
-           {
-             this.state.beneficials.map((obj, index)=> {
-                return <div key={ index } className={style.membersBox} >
-                  {index!=0 &&
-                    <div style={{"width":"100%"}} className={'flex-row-end-center '}>
-                      <div>
-                        <span onClick={() => {this.removeMembers("beneficials",index)}} style={{"fontSize":"12px","textDecoration":"underline","color":"red","cursor":"pointer"}}>
-                        Remove
-                        </span>                     
-                      </div>
-                    </div>
-                  } 
-
-                  {/*inputSuite*/}
-                  <div className={'flex-row-start-start '+style.inputSuite}>
-                    <div className={'vertical-center '+style.inputLabel}>
-                     <div>
-                      <span style={{"fontSize":"14px"}}>Benefical Name</span>                     
-                     </div>
-                    </div>
-                    <div style={{"marginLeft":"3px"}}>
-                      <div className={style.inputWrap}>
-                        <input type="text" value={this.state["beneficials"][index].name.value} onChange={(event) => this.bindMemberInputData(event,"beneficials",index,"name")}  placeholder="Enter the beneficial name" className={'default-inputfield '+style.inputNormal} />
-                      </div>
-                      <div>
-                        <span style={{"color":"red","marginLeft":"1.5px"}}>{this.state["beneficials"][index].name.error}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/*inputSuite*/}
-                  <div className={'flex-row-start-start '+style.inputSuite}>
-                    <div className={'vertical-center '+style.inputLabel}>
-                     <div>
-                      <span style={{"fontSize":"14px"}}>Benefical Email</span>
-                     </div>
-                    </div>
-                    <div style={{"marginLeft":"3px"}}>
-                      <div className={style.inputWrap}>
-                        <input type="text" value={this.state["beneficials"][index].email.value} onChange={(event) => this.bindMemberInputData(event,"beneficials",index,"email")}  placeholder="Enter the beneficial email" className={'default-inputfield '+style.inputNormal} />
-                      </div>
-                      <div>
-                        <span style={{"color":"red","marginLeft":"1.5px"}}>{this.state["beneficials"][index].email.error}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-             })     
-
-           }     
-
-            <div>
-              {/*add more beneficials button*/}
-              <div className={'flex-row-start-start '+style.inputSuite}>
-                <div className={'vertical-center '+style.inputLabel}>                 
-                </div>
-                <div style={{"marginLeft":"3px"}}>
-                  <div className={style.inputWrap}>
-                    <button onClick={() => {this.addMoreMembers("beneficials")}} className={"default-inputfield "}>
-                      <i className="icon ion-plus"></i>&nbsp;
-                      Add more beneficials
-                    </button>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={this.props.hideModal}>Cancel</Button> 
-        {!this.props.company.isNewCompanySaving &&
-          <button onClick={this.create} className={"default-inputfield " +style.createBtn}>
+        {!this.props.company.isCompanyInfoUpdating &&
+          <button onClick={this.update} className={"default-inputfield " +style.updateBtn}>
             <i className="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-            Create
+            Update
           </button>
         }
 
-        {this.props.company.isNewCompanySaving &&
-          <button className={"default-inputfield " +style.createBtn}>
+        {this.props.company.isCompanyInfoUpdating &&
+          <button className={"default-inputfield " +style.updateBtn}>
             <i className="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>&nbsp;
-            Creating..
+            Updating..
           </button>
         }
                 

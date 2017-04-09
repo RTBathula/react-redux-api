@@ -41,3 +41,17 @@ export const fetchCompanyDetails = (companyId,successCB,errorCB) => {
     }
   })
 }
+
+export const updateCompanyDetails = (companyId,updateObj,successCB,errorCB) => {   
+  return request
+  .put(baseURL+'/company/'+companyId+'/update-company') 
+  .send(updateObj)
+  .end(function(err, reply){       
+    var resp=JSON.parse(reply.text)              
+    if (err || !reply.ok) {
+      errorCB(resp.message)
+    } else {    
+      successCB(resp.data)
+    }
+  })
+}
