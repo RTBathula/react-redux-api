@@ -113,11 +113,12 @@ export default function company(state = initialState, action) {
         isCompanyInfoUpdating    : false,       
         companyDetails           : {
           ...state.companyDetails,
-          address  : action.updatedDetails.address,
-          city     : action.updatedDetails.city,
-          country  : action.updatedDetails.country,
-          email    : action.updatedDetails.email,
-          phone    : action.updatedDetails.phone
+          address   : action.updatedDetails.address,
+          city      : action.updatedDetails.city,
+          country   : action.updatedDetails.country,
+          email     : action.updatedDetails.email,
+          phone     : action.updatedDetails.phone,
+          updatedAt : action.updatedDetails.updatedAt
         }       
       }
 
