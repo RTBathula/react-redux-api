@@ -2,8 +2,8 @@ import { browserHistory } from 'react-router'
 import * as types from 'constants/company'
 import * as companyApi from 'api/company'
 
-export const getCompanyListAsync = () => (dispatch, getState) => {   
-	companyApi.getList(list =>{		
+export const getCompanyListAsync = (skip,limit) => (dispatch, getState) => {   
+	companyApi.getList(skip,limit,list =>{		
 	  	dispatch({ 
 			type  : types.COMPANY_GETLIST_SUCCESS,
 			list  : list
@@ -15,6 +15,28 @@ export const getCompanyListAsync = () => (dispatch, getState) => {
 		})
 	}) 
 }
+
+export const toggleIsFetchingCompanyList = (bool) => {
+  return ({
+    type               : types.COMPANY_ISFETCHING,
+    isFetchingList     : bool
+  })
+}
+
+export const fetchMoreCompaniesAsync = (skip,limit) => (dispatch, getState) => {   
+	companyApi.getList(skip,limit,list =>{		
+	  	dispatch({ 
+			type  : types.COMPANY_FETCH_SUCCESS,
+			list  : list
+		})
+	},error =>{
+	  	dispatch({ 
+			type  : types.COMPANY_FETCH_FAILURE,
+			error : error
+		})
+	}) 
+}
+
 
 export const toggleIsNewCompanySaving = (bool) => {
   return ({

@@ -62,6 +62,12 @@ class App extends Component {
     }       
   }
 
+  componentWillReceiveProps(nextProps) {    
+    if(this.props.company.isNewCompanySaving && !nextProps.company.isNewCompanySaving && !nextProps.company.newCompanySavingErr){
+      this.props.hideModal()
+    }   
+  }
+
   addMoreMembers=(columnName)=>{  
     this.state[columnName].push({
         name  : {

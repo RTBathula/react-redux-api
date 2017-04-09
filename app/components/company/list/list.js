@@ -1,10 +1,12 @@
 import React, { PropTypes, Component } from 'react'
+import {Link} from 'react-router'
 
 //Css
 import layoutStyle from 'components/layout.css'
 import style from './list.css'
 
 import CreateCompanyModal from '../createCompanyModal/createCompanyModal'
+import LocalTime from 'components/helpers/localTime'
 
 class App extends Component { 
 
@@ -31,11 +33,11 @@ class App extends Component {
     var isItemsFilledTable=false;
     if(this.props.company.list.length>=this.props.company.limit){
       isItemsFilledTable = true
-    }
+    }    
 
-    if(contentHeight==scrollTop && !this.props.company.isFetchingList && isItemsFilledTable){
+    if(contentHeight==scrollTop && !this.props.company.isFetchingList && isItemsFilledTable){          
       this.props.actions.toggleIsFetchingCompanyList(true)
-      this.props.actions.getCompanyListAsync(this.props.company.skip,this.props.company.limit)
+      this.props.actions.fetchMoreCompaniesAsync(this.props.company.skip,this.props.company.limit)
     }
   }
 
@@ -47,9 +49,9 @@ class App extends Component {
           {(!this.props.company.isTableLoading && !this.props.company.isTableLoadError) &&         
             <section className={style.listContainer}>
               <p>Company list and details</p> 
-              <div className={'flex-row-start-start'} style={{"width":"100%","margin":"2px 0px 7px 0px","height":"30px"}}>
+              <div style={{"width":"100%","margin":"2px 0px 7px 0px","height":"30px"}}>
                 {/*Create button*/}
-                <div style={{"height":"100%"}}>
+                <div style={{"height":"100%"}} className="pull-left">
                   <button onClick={() => this.setState({openCreateCompanyModel: true})} className={"default-inputfield " +style.createBtn}>
                     <i className="icon ion-plus"></i>&nbsp;
                     Create new company
@@ -57,7 +59,7 @@ class App extends Component {
                 </div>
 
                 {/*Loading,error, status bar*/}
-                <div style={{"height":"100%","marginLeft":"14px"}}  className={'vertical-center'}>
+                <div style={{"height":"100%","marginLeft":"14px"}}  className="pull-left vertical-center">
                   <div className={'flex-row-start-start'}>
                     <div>
                       {/*Spinner*/}
@@ -91,38 +93,48 @@ class App extends Component {
                     </div>
                   </div>
                 </div>
+
+                {/*Table count*/}
+                <div style={{"height":"100%","marginRight":"4px"}} className="pull-right vertical-center">
+                  <div>  
+                    <span>Now showing {this.props.company.list.length}</span>                            
+                  </div>
+                </div>
               </div>
                
-                <div className={style.companyTableWrap} ref="companyList">                          
+                <div className={style.companyTableWrap} ref="companyList" onScroll={this.handleInfiniteLoad.bind(this)}>                          
                   <table className={'table table-hover '+style.companytable}>
                     <thead>
                       <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Location</th>  
+                        <th>createdAt</th>  
                         <th>Actions</th>                    
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>john@example.com</td>
-                        <td>john@example.com</td>
-                      </tr>
-                      <tr>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
-                        <td>john@example.com</td>
-                      </tr>
-                      <tr>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td>july@example.com</td>
-                        <td>john@example.com</td>
-                      </tr>
-
+                    {
+                      this.props.company.list.sort(function(a,b) {                      
+                        return b.createdAt - a.createdAt 
+                      }).map((obj, index)=> {
+                        return  <tr  key={ index }>
+                          <td>
+                            <Link className="companyIdLink" to={'/company/'+obj._id } target="_blank">
+                              <span>{obj._id}</span>
+                            </Link>                          
+                          </td>
+                          <td>{obj.name}</td>
+                          <td>
+                            <LocalTime date={obj.createdAt} />
+                          </td>
+                          <td>
+                            <Link className="companyIdLink" to={'/company/'+obj._id } target="_blank">
+                              <span>View details</span>
+                            </Link>
+                          </td>                          
+                        </tr>
+                      })
+                    }                     
                     </tbody>
                   </table>
                 </div>                          

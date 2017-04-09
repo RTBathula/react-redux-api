@@ -7,7 +7,7 @@ const initialState = {
   isFetchingList   : false,  
   fetchError       : null,
   skip             : 0,
-  limit            : 50,
+  limit            : 10,
   list             : [],
 
   isNewCompanySaving  : false,
@@ -30,18 +30,42 @@ export default function company(state = initialState, action) {
         isTableLoadError : action.error       
       } 
 
+    case types.COMPANY_ISFETCHING:
+
+      return {
+        ...state,
+        isFetchingList  : action.isFetchingList,
+        fetchError      : null
+      } 
+
+    case types.COMPANY_FETCH_SUCCESS:           
+      return {       
+        ...state,
+        isFetchingList     : false,       
+        list               : [...state.list,...action.list],
+        skip               : [...state.list,...action.list].length            
+      }
+
+    case types.COMPANY_FETCH_FAILURE:      
+      return {       
+        ...state,
+        isFetchingList     : false,       
+        fetchError         : action.error             
+      }    
+
     case types.COMPANY_NEW_ISSAVING:
 
       return {
         ...state,
-        isNewCompanySaving : action.isNewCompanySaving
+        isNewCompanySaving  : action.isNewCompanySaving,
+        newCompanySavingErr : null
       } 
 
     case types.COMPANY_NEW_SUCCESS:      
       return {       
         ...state,
         isNewCompanySaving : false,       
-        list               : [action.newCompany]             
+        list               : [...state.list,action.newCompany]             
       }
     
     case types.COMPANY_NEW_FAILURE:

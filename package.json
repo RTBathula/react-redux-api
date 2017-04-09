@@ -20,6 +20,7 @@
     "babel-preset-stage-2": "^6.18.0",
     "classnames": "^2.2.5",
     "css-loader": "^0.26.0",
+    "dateformat": "^2.0.0",
     "expose-loader": "^0.7.1",
     "express": "^4.13.4",
     "external-loader": "^0.1.1",
