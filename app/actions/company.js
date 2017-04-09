@@ -93,3 +93,24 @@ export const updateCompanyDetailsAsync = (companyId,updateObj) => (dispatch, get
 		})
 	}) 
 }
+
+export const toggleIsAddingBeneficial = (bool) => {
+  return ({
+    type                  : types.COMPANY_ISADDING_BENEFICIAL,
+    isAddingBeneficial    : bool
+  })
+}
+
+export const addBeneficialAsync = (companyId,beneficialObj) => (dispatch, getState) => {   
+	companyApi.addBeneficial(companyId,beneficialObj,addedBeneficial =>{		
+	  	dispatch({ 
+			type             : types.COMPANY_ADDINGBENEFICIAL_SUCCESS,
+			addedBeneficial  : addedBeneficial
+		})
+	},error =>{
+	  	dispatch({ 
+			type  : types.COMPANY_ADDINGBENEFICIAL_FAILURE,
+			error : error
+		})
+	}) 
+}

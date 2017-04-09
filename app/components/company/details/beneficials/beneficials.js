@@ -5,12 +5,14 @@ import {Link} from 'react-router'
 import style from '../details.css'
 import beneficialsStyle from './beneficials.css'
 
+import AddBeneficialModal from './addBeneficialModal/addBeneficialModal'
 
 class App extends Component { 
 
    constructor(props) {
     super(props);
-    this.state = {                
+    this.state = {   
+      openAddBeneficialModal : false              
     }
   }
 
@@ -19,14 +21,16 @@ class App extends Component {
 
   render() {
     return (         
-        
+      <div>  
         <div className={style.detailsBx}>
           <div className={"flex-row-start-start"}>
             <div style={{"height":"20px"}} className={"vertical-center"}>
               <span style={{"fontSize":"17px","fontWeight":"500"}}>Beneficials owners</span>
             </div>
             <div style={{"height":"20px","marginLeft":"2px"}} className={"vertical-center"}>
-              <span style={{"color":"blue","textDecoration":"underline","cursor":"pointer"}}>(+Add more beneficials)</span>
+              <span onClick={() => this.setState({openAddBeneficialModal: true})} style={{"color":"blue","textDecoration":"underline","cursor":"pointer"}}>
+              (+Add more beneficials)
+              </span>
             </div>           
           </div>
           <div style={{"borderTop":"1px solid gray","margin":"6px 0px 6px 0px","width":"100%"}}>
@@ -58,8 +62,9 @@ class App extends Component {
             }                         
 
           </div>
-
-        </div>              	  	
+        </div> 
+        <AddBeneficialModal  showModal={this.state.openAddBeneficialModal} hideModal={() => this.setState({openAddBeneficialModal: false})}/>
+      </div>                	  	
     );
   }
 }

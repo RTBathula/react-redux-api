@@ -18,7 +18,10 @@ const initialState = {
   companyDetails            : {},
 
   isCompanyInfoUpdating  : false,
-  companyInfoUpdatingErr : null  
+  companyInfoUpdatingErr : null,
+
+  isAddingBeneficial  : false,
+  addingBeneficialErr : null 
 }
 
 export default function company(state = initialState, action) {
@@ -123,7 +126,32 @@ export default function company(state = initialState, action) {
         ...state,      
         isCompanyInfoUpdating      : false, 
         companyInfoUpdatingErr     : action.error       
-      }        
+      } 
+
+    case types.COMPANY_ISADDING_BENEFICIAL:
+
+      return {
+        ...state,
+        isAddingBeneficial  : action.isAddingBeneficial,
+        addingBeneficialErr : null
+      }
+      
+    case types.COMPANY_ADDINGBENEFICIAL_SUCCESS:      
+      return {       
+        ...state,
+        isAddingBeneficial : false,       
+        companyDetails : {
+          ...state.companyDetails,
+          beneficials : [...state.companyDetails.beneficials,action.addedBeneficial] 
+        }            
+      }
+
+    case types.COMPANY_ADDINGBENEFICIAL_FAILURE:
+      return {       
+        ...state,      
+        isAddingBeneficial      : false, 
+        addingBeneficialErr     : action.error       
+      }              
 
  
     default:
