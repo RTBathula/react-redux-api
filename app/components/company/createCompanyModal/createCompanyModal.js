@@ -191,7 +191,7 @@ class App extends Component {
       })
     }  
 
-    txtMsg = helpers.validateTextField(this.state.address.value)
+    txtMsg = helpers.validateDefaultTextField(this.state.address.value)
     if(txtMsg.error){
       this.state.address.error="Company Address"+txtMsg.error   
       this.setState({
@@ -199,12 +199,6 @@ class App extends Component {
       })
       isValid = false      
     }
-    if(!txtMsg.error && txtMsg.txt){
-      this.state.address.value = txtMsg.txt   
-      this.setState({
-        address: this.state.address
-      })
-    } 
 
     txtMsg = helpers.validateTextField(this.state.city.value)
     if(txtMsg.error){

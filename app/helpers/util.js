@@ -1,31 +1,3 @@
-import cookie from 'react-cookie'
-
-export const getTokenCookie = () => {
-  let token = cookie.load('token');
-  return token ? token : null;
-};
-
-export const setTokenCookie = (token) => {  
-  cookie.save('token', token, { path: '/' });
-};
-
-export const removeTokenCookie = () => {
-  cookie.remove('token', { path: '/' });
-};
-
-export const getDriverIdMeTokenCookie = () => {
-  let token = cookie.load('token');
-  return token ?  JSON.parse(new Buffer(token.split('.')[1], 'base64').toString()).userId : null;
-};
-
-export const getHeadersConfig = () => {
-  return {
-    headers: {
-      'Authorization': 'Bearer ' + cookie.load('token')
-    }
-  }
-};
-
 export const validarEmail = (email) => {
   let expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return expr.test(email);
@@ -51,6 +23,20 @@ export const validateTextField = (txt) => {
   }
 
   txt = capitalizeFirstLetterAndTrim(txt);
+
+  return {"txt":txt,"error":error}
+};
+
+export const validateDefaultTextField = (txt) => { 
+
+  let error = null;
+  if(!txt || txt=="" || (txt && hasWhiteSpace(txt))){
+    error=" required"    
+  }
+
+  if(txt.length < 2){
+    error=" should atleast of 2 chars"      
+  }
 
   return {"txt":txt,"error":error}
 };

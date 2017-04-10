@@ -99,20 +99,14 @@ class App extends Component {
 
     let isValid = true  
 
-    let txtMsg = helpers.validateTextField(this.state.address.value)
+    let txtMsg = helpers.validateDefaultTextField(this.state.address.value)
     if(txtMsg.error){
       this.state.address.error="Company Address"+txtMsg.error   
       this.setState({
         address: this.state.address
       })
       isValid = false      
-    }
-    if(!txtMsg.error && txtMsg.txt){
-      this.state.address.value = txtMsg.txt   
-      this.setState({
-        address: this.state.address
-      })
-    } 
+    }   
 
     txtMsg = helpers.validateTextField(this.state.city.value)
     if(txtMsg.error){

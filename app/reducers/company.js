@@ -31,7 +31,8 @@ export default function company(state = initialState, action) {
       return {       
       	...state,
         isTableLoading : false,       
-        list           : action.list             
+        list           : action.list,
+        skip           : [...state.list,...action.list].length             
       }
     case types.COMPANY_GETLIST_FAILURE:
       return {       
