@@ -115,7 +115,7 @@ class App extends Component {
                     <tbody>
                     {
                       this.props.company.list.sort(function(a,b) {                      
-                        return b.createdAt - a.createdAt 
+                        return new Date(b.createdAt) - new Date(a.createdAt) 
                       }).map((obj, index)=> {
                         return  <tr  key={ index }>
                           <td>
