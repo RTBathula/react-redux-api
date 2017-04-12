@@ -5,7 +5,7 @@ Clearhaus test project. A company web dashboard for the company API(https://gith
 http://nodecompanyweb.herokuapp.com
 
 # Trivia
-Used ES6,Reactjs and Reduxjs for project. Using Reduxjs, avoided mutable updates to the data. Also made a good UI design on connecting to company api.
+Used ES6,Reactjs and Reduxjs for this project. Using Reduxjs, avoided mutable updates to the data. Also made a good UI design on connecting to company api.
 Throughout the project, errors are respected(i.e properly showing) and showing spinners whenever is necessary.
 
 
@@ -28,7 +28,7 @@ Alternatively you can set by environment variable by
 export APIURL = 'http://localhost:1447'
 ```
 
-# Build ES6 with babel and and Run Server
+# Run Server
 After completing all above steps run your node.js server
 ```
 npm start
@@ -41,14 +41,20 @@ Yes, As dockerfile is written for this project, you can deploy to heroku using s
 ```
 heroku create
 heroku container:push web
-heroku ps:scale web=1
+heroku config:set APIURL=http://localhost:1447
 ```
-##Using existing docker image from (rtbathula/nodeapp)
+##Using existing docker image from (rtbathula/reactreduxweb)
 ```
-docker tag rtbathula/nodeapp registry.heroku.com/<heroku-app-name>/web
+docker tag rtbathula/reactreduxweb registry.heroku.com/<heroku-app-name>/web
 docker push registry.heroku.com/<heroku-app-name>/web
-heroku ps:scale web=1
+heroku config:set APIURL=http://localhost:1447
 ```
+
+NOTE: If you're using docker in locally , you should set APIURL in docker run command, otherwise http://localhost:1447 take as default APIURL
+```
+docker run -d -e APIURL=http://nodecompanyweb.herokuapp.com -p 8080:1446 rtbathula/reactreduxweb
+```
+
 For more info, look here https://devcenter.heroku.com/articles/container-registry-and-runtime
 
 ## Love :heart: to hear feedback from you
