@@ -1,0 +1,57 @@
+# Nodejs company dashboard 
+Clearhaus test project. A company web dashboard for the company API(https://github.com/RTBathula/nodeapp)
+
+# Hosted URL
+http://nodecompanyweb.herokuapp.com
+
+# Trivia
+Used ES6,Reactjs and Reduxjs for project. Using Reduxjs, avoided mutable updates to the data. Also made a good UI design on connecting to company api.
+Throughout the project, errors are respected(i.e properly showing) and showing spinners whenever is necessary.
+
+
+# Getting Started
+
+Fork and clone the repository. Install dependencies with:
+
+``npm install``
+
+# Company API Url connection
+Configure company API Url in app/config/keys.js file
+
+Example: under app/config/keys.js
+```
+var baseURL = 'http://localhost:1447'
+```
+
+Alternatively you can set by environment variable by
+```
+export APIURL = 'http://localhost:1447'
+```
+
+# Build ES6 with babel and and Run Server
+After completing all above steps run your node.js server
+```
+npm start
+```
+
+# Can I deploy docker image in heroku?
+Yes, As dockerfile is written for this project, you can deploy to heroku using simple heroku commands. Here is how.
+
+##Direct image push to heroku from project workspace(main commands)
+```
+heroku create
+heroku container:push web
+heroku ps:scale web=1
+```
+##Using existing docker image from (rtbathula/nodeapp)
+```
+docker tag rtbathula/nodeapp registry.heroku.com/<heroku-app-name>/web
+docker push registry.heroku.com/<heroku-app-name>/web
+heroku ps:scale web=1
+```
+For more info, look here https://devcenter.heroku.com/articles/container-registry-and-runtime
+
+## Love :heart: to hear feedback from you
+RT Bathula-weirdo,coffee lover
+battu.network@gmail.com
+
