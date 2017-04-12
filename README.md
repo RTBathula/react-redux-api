@@ -1,4 +1,4 @@
-# Nodejs company dashboard 
+# React-Redux company dashboard 
 Clearhaus test project. A company web dashboard for the company API(https://github.com/RTBathula/nodeapp).
 
 # Hosted URL
