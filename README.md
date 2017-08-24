@@ -1,15 +1,5 @@
 # React-Redux company dashboard 
-Clearhaus test project. A company web dashboard for the company API(https://github.com/RTBathula/nodeapp).
-
-# Hosted URL
-http://nodecompanyweb.herokuapp.com
-The hosted Dashboard is pointing to http://nodecompanyapi.herokuapp.com for company API.
-
-
-# Trivia
-Used ES6,Reactjs and Reduxjs for this project. Using Reduxjs, avoided mutable updates to the data. Also made a good UI design on connecting to company api.
-Throughout the project, errors are respected(i.e properly showing) and showing spinners wherever is necessary.
-
+A company web dashboard for the company API
 
 # Getting Started
 
